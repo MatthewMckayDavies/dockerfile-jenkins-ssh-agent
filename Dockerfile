@@ -1,6 +1,5 @@
 # https://www.jenkins.io/doc/book/installing/docker/
 FROM jenkins/ssh-agent
-USER root
 
 # Setup locale - https://hub.docker.com/_/ubuntu
 RUN apt-get update && apt-get install -y locales \
