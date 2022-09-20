@@ -1,5 +1,6 @@
 # https://www.jenkins.io/doc/book/installing/docker/
-FROM jenkins/ssh-agent
+FROM jenkins/ssh-agent:jdk11
+USER root
 
 # Setup locale - https://hub.docker.com/_/ubuntu
 RUN apt-get update && apt-get install -y locales \
@@ -8,15 +9,16 @@ ENV LANG en_US.utf8
 
 # Install docker CLI - https://docs.docker.com/engine/install/debian/
 RUN apt-get install -y ca-certificates curl gnupg lsb-release
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 RUN echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-RUN apt-get update && apt-get install -y docker-ce-cli
+RUN apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 # Install docker compose - https://docs.docker.com/compose/install/
-RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-RUN chmod +x /usr/local/bin/docker-compose
+# docker compose is now part of the CLI
 
 # Tidy apt
 RUN rm -rf /var/lib/apt/lists/*
+
