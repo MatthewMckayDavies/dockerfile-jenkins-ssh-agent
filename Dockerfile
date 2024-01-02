@@ -1,5 +1,6 @@
 # https://www.jenkins.io/doc/book/installing/docker/
-FROM jenkins/ssh-agent:jdk11
+# https://github.com/jenkinsci/docker-ssh-agent
+FROM jenkins/ssh-agent:debian-jdk11
 USER root
 
 # Setup locale - https://hub.docker.com/_/ubuntu
@@ -21,4 +22,5 @@ RUN apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io d
 
 # Tidy apt
 RUN rm -rf /var/lib/apt/lists/*
+USER jenkins
 
