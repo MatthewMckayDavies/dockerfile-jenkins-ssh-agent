@@ -1,7 +1,6 @@
 # https://www.jenkins.io/doc/book/installing/docker/
 # https://github.com/jenkinsci/docker-ssh-agent
 FROM jenkins/ssh-agent:debian-jdk17
-USER root
 
 # Setup locale - https://hub.docker.com/_/ubuntu
 RUN apt-get update && apt-get install -y locales \
@@ -24,5 +23,4 @@ RUN apt-get update && apt-get install -y docker-ce-cli docker-compose-plugin
 
 # Tidy apt
 RUN rm -rf /var/lib/apt/lists/*
-USER jenkins
 
