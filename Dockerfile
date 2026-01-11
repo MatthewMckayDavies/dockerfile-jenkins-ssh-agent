@@ -1,6 +1,6 @@
 # https://www.jenkins.io/doc/book/installing/docker/
 # https://github.com/jenkinsci/docker-ssh-agent
-FROM jenkins/ssh-agent:debian-jdk17
+FROM jenkins/ssh-agent:debian-jdk21
 
 # Setup locale - https://hub.docker.com/_/ubuntu
 RUN apt-get update && apt-get install -y locales \
